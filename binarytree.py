@@ -13,7 +13,7 @@ def createNewCenteredBinaryTree(centerpoint, s, maxdist):
         return BinaryTree(centerpoint, maxdist)
     elif len(s) ==1:
         b = BinaryTree(centerpoint, maxdist)
-        b.setChildren(createNewCenteredBinaryTree(s.pop(), s), None)
+        b.setChildren(createNewCenteredBinaryTree(s.pop(), s, 0), None)
         return b
     
     leftpoint = s.pop()
@@ -58,7 +58,7 @@ class BinaryTree:
         
         order = (0,1) if c0<=c1 else (1,0)
         for i in order:
-            if self.children[i].maxdist+mincost>=c0:
+            if self.children[i] != None and self.children[i].maxdist+mincost>=c0:
                 (c, v) = self.children[i].getMinDistance(e, mincost, minval)
                 if c< mincost:
                     (mincost, minval) = (c,v)
@@ -73,7 +73,7 @@ class BinaryTree:
             return self.children[1]
         
     def getCosts(self, e):
-        print self.children
+       # print self.children
         return (dist(e, self.children[0].val), dist(e, self.children[1].val) if self.children[1] != None else sys.maxint)
     
     def setChildren(self, left, right):
